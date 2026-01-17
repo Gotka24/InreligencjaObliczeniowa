@@ -41,7 +41,7 @@ X_train, y_train = extract_features(train_loader)
 X_val, y_val = extract_features(val_loader)
 X_test, y_test = extract_features(test_loader)
 
-# skalowanie ceh, zeby modelom łatwiej było
+# skalowanie cech, zeby modelom łatwiej było
 scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_val_scaled = scaler.transform(X_val)
@@ -200,7 +200,7 @@ cm_svm = confusion_matrix(y_test, y_pred_svm)
 
 plt.figure(figsize=(12,10))
 sns.heatmap(cm_svm, annot=False, fmt="d", xticklabels=classes, yticklabels=classes,
-            cmap="Reds") # Zmieniony kolor na czerwony, żeby odróżnić od k-NN
+            cmap="Reds")
 plt.title(f"SVM (C={best_svm_C}) - Macierz pomyłek")
 plt.xlabel("Przewidziane")
 plt.ylabel("Rzeczywiste")

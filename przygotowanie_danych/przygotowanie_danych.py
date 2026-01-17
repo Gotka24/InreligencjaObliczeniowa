@@ -52,6 +52,7 @@ def przed_po(data_dir, przyklady=4):
     train_transform = transforms.Compose([
         transforms.Resize((224, 224)),
         transforms.RandomHorizontalFlip(),
+        transforms.ColorJitter(0.3, 0.3, 0.3),
         transforms.RandomRotation(10),
         transforms.ToTensor()
     ])
@@ -135,6 +136,30 @@ def get_data_loaders(data_dir, batch_size=32):
 
     return train_loader, val_loader, test_loader, classes
 
+
+
+def get_gan_loader(data_dir, batch_size=32, image_size=64):
+    transform = transforms.Compose([
+        transforms.Resize((image_size, image_size)),
+        transforms.RandomHorizontalFlip(),
+        transforms.ColorJitter(0.2, 0.2, 0.2),
+        transforms.ToTensor(),
+        transforms.Normalize(
+            mean=[0.5, 0.5, 0.5],
+            std=[0.5, 0.5, 0.5]
+        )
+    ])
+
+    dataset = datasets.ImageFolder(data_dir, transform=transform)
+    loader = DataLoader(
+        dataset,
+        batch_size=batch_size,
+        shuffle=True,
+        num_workers=0,
+        drop_last=True
+    )
+
+    return loader, dataset.classes
 
 
 if __name__ == "__main__":
